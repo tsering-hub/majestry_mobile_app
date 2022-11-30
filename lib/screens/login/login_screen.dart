@@ -31,12 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 40,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: SizedBox(
-                      child: SvgPicture.asset('assets/icons/logo.svg',
-                          semanticsLabel: 'Acme Logo'),
-                    ),
+                  SizedBox(
+                    child: SvgPicture.asset('assets/icons/logo.svg',
+                        semanticsLabel: 'Acme Logo'),
                   ),
                   const SizedBox(
                     height: 40,
@@ -162,7 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         )),
                         Expanded(
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, "/registerScreen");
+                                },
                                 child: const Text(
                                   "Sign Up",
                                   style: TextStyle(fontSize: 16),
