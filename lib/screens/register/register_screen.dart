@@ -11,21 +11,21 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _firstController = TextEditingController();
-  final _lastController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _cpasswordController = TextEditingController();
 
   // List<PatientModel> patientlst = [];
 
   bool _isObscure = true;
-
+  bool _isObscure2 = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 245, 242, 242),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -57,17 +57,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     margin: const EdgeInsets.only(bottom: 10),
                     width: size.width * 0.8,
                     child: TextFormField(
-                      key: const ValueKey("txtFirstname"),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please Firstname';
+                          return 'Please Username';
                         }
                         return null;
                       },
-                      controller: _firstController,
+                      controller: _usernameController,
                       style: const TextStyle(fontSize: 19),
                       decoration: const InputDecoration(
-                        hintText: "FirstName",
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: "Username",
                         prefixIcon: Icon(Icons.account_circle),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFF1F1F1)),
@@ -84,17 +85,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     margin: const EdgeInsets.only(bottom: 10),
                     width: size.width * 0.8,
                     child: TextFormField(
-                      key: const ValueKey("txtLastname"),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please Lastname';
+                          return 'Please Name';
                         }
                         return null;
                       },
-                      controller: _lastController,
+                      controller: _nameController,
                       style: const TextStyle(fontSize: 19),
                       decoration: const InputDecoration(
-                        hintText: "LastName",
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: "Name",
                         prefixIcon: Icon(Icons.account_circle),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFF1F1F1)),
@@ -121,6 +123,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       controller: _emailController,
                       style: const TextStyle(fontSize: 19),
                       decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         hintText: "Email",
                         prefixIcon: Icon(Icons.email),
                         enabledBorder: OutlineInputBorder(
@@ -149,6 +153,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       obscureText: _isObscure,
                       style: const TextStyle(fontSize: 19),
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         hintText: "Password",
                         prefixIcon: const Icon(Icons.key),
                         suffixIcon: IconButton(
@@ -184,18 +190,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         return null;
                       },
                       controller: _cpasswordController,
-                      obscureText: _isObscure,
+                      obscureText: _isObscure2,
                       style: const TextStyle(fontSize: 19),
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
                         hintText: "Confirm Password",
                         prefixIcon: const Icon(Icons.key),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              _isObscure = !_isObscure;
+                              _isObscure2 = !_isObscure2;
                             });
                           },
-                          icon: Icon(_isObscure
+                          icon: Icon(_isObscure2
                               ? Icons.visibility
                               : Icons.visibility_off),
                         ),
@@ -243,7 +251,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                "/login",
+                                "/loginScreen",
                               );
                             },
                             child: const Text(
