@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:majestry_mobile_app/model/user_model.dart';
+import 'package:majestry_mobile_app/repository/user_repository.dart';
+import 'package:majestry_mobile_app/utils/show_message.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -16,7 +20,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _passwordController = TextEditingController();
   final _cpasswordController = TextEditingController();
 
-  // List<PatientModel> patientlst = [];
+  _registerUser(UserModel user) async {
+    bool isSignup = await UserRepository().registerUser(user);
+    _displayMessage(isSignup);
+  }
+
+  _displayMessage(bool isSignup) {
+    if (isSignup) {
+      // displaySuccessMessage(context, "Register Success");
+      Navigator.pushNamed(context, "/loginScreen");
+    } else {
+      displayErrorMessage(context, "Register Failed");
+    }
+  }
 
   bool _isObscure = true;
   bool _isObscure2 = true;
@@ -226,7 +242,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 45,
                     child: ElevatedButton(
                       key: const ValueKey("btnRegister"),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (_passwordController.text ==
+                              _cpasswordController.text) {
+                            UserModel user = UserModel(
+                              username: _usernameController.text,
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                            _registerUser(user);
+                          } else {
+                            displayErrorMessage(context,
+                                "Password and Confirm Password did not matched");
+                          }
+                        }
+                      },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(

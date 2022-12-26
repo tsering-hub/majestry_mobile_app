@@ -1,10 +1,11 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:majestry_mobile_app/api/httpservices.dart';
 import 'package:majestry_mobile_app/model/user_model.dart';
 import 'package:majestry_mobile_app/response/loginresponse.dart';
 import 'package:majestry_mobile_app/utils/url.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserApi {
@@ -53,6 +54,7 @@ class UserApi {
       if (response.statusCode == 200) {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
         token = loginResponse.token;
+        usertype = loginResponse.usertype;
 
         if (token == null) {
           isLogin = false;

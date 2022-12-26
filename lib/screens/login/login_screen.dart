@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:majestry_mobile_app/repository/user_repository.dart';
+import 'package:majestry_mobile_app/utils/show_message.dart';
+import 'package:majestry_mobile_app/utils/url.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,10 +13,22 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   bool _isObscure = true;
+
+  _loginUser() async {
+    bool isLogin = await UserRepository()
+        .loginUser(_emailController.text, _passwordController.text);
+    if (isLogin && usertype == "Customer") {
+      // ignore: use_build_context_synchronously
+      displaySuccessMessage(context, "Login Success");
+    } else {
+      // ignore: use_build_context_synchronously
+      displayErrorMessage(context, "Login Failed");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +71,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       key: const ValueKey("txtUsername"),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter Username';
+                          return 'Please enter Email';
                         }
                         return null;
                       },
-                      controller: _usernameController,
+                      controller: _emailController,
                       style: const TextStyle(fontSize: 19),
                       decoration: const InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: "Username",
+                        hintText: "Email",
                         prefixIcon: Icon(Icons.account_circle),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFFF1F1F1)),
@@ -135,7 +150,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 45,
                     child: ElevatedButton(
                       key: const ValueKey("btnLogin"),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _loginUser();
+                        }
+                      },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(

@@ -4,3 +4,4 @@ const loginUrl = "users/login";
 const registerUrl = "users/register";
 
 String? token;
+String? usertype;
