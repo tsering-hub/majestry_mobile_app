@@ -46,23 +46,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 40,
                   ),
+                  const Text(
+                    "Welcome To",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 48, 48, 48),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   SizedBox(
                     child: SvgPicture.asset('assets/icons/logo.svg',
                         semanticsLabel: 'Acme Logo'),
                   ),
                   const SizedBox(
                     height: 40,
-                  ),
-                  const Text(
-                    "Login",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 25),
