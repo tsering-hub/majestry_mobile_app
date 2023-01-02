@@ -138,7 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.bottomLeft,
                     width: size.width * 0.8,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, "/forgetpasswordEmailScreen");
+                      },
                       child: const Text(
                         "forget password?",
                         style: TextStyle(fontSize: 15),
