@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class _EmailScreenState extends State<EmailScreen> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text("Reset Password"),
+        title: const Text("Email Verification"),
       ),
       backgroundColor: const Color.fromARGB(255, 245, 242, 242),
       body: Form(
@@ -22,6 +23,10 @@ class _EmailScreenState extends State<EmailScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              child: SvgPicture.asset('assets/icons/forgetpassword.svg',
+                  semanticsLabel: 'Acme Logo'),
+            ),
             Container(
               margin: const EdgeInsets.only(bottom: 30),
               width: size.width * 0.8,
@@ -66,15 +71,25 @@ class _EmailScreenState extends State<EmailScreen> {
               width: size.width * 0.8,
               height: 45,
               child: ElevatedButton(
-                key: const ValueKey("btnLogin"),
-                onPressed: () {},
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)))),
-                child: const Text("Send OTP",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-              ),
+                  key: const ValueKey("btnLogin"),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/otpverificationScreen");
+                  },
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Send OTP",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(Icons.send)
+                    ],
+                  )),
             ),
           ],
         ),
