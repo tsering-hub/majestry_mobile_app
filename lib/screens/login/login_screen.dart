@@ -39,13 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: const Color.fromARGB(255, 245, 242, 242),
         body: Form(
           key: _formKey,
-          child: SingleChildScrollView(
-            child: Center(
+          child: Center(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 40,
-                  ),
                   const Text(
                     "Welcome To",
                     style: TextStyle(
