@@ -18,7 +18,8 @@ class _EmailScreenState extends State<EmailScreen> {
   _sendOtp() async {
     bool isSend = await OtpRepository().sendEmail(_emailController.text);
     if (isSend) {
-      Navigator.pushNamed(context, "/otpverificationScreen");
+      Navigator.pushNamed(context, "/otpverificationScreen",
+          arguments: _emailController.text);
       // ignore: use_build_context_synchronously
       displaySuccessMessage(context, "Please Check Your Email");
     } else {

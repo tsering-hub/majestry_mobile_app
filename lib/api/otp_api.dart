@@ -24,4 +24,24 @@ class OtpApi {
     }
     return isSend;
   }
+
+  Future<bool> resetPassword(
+      String email, String otpcode, String password) async {
+    bool isChanged = false;
+    Response response;
+    var url = resetpasswordUrl;
+    var dio = HttpServices().getDioInstace();
+    try {
+      response = await dio.put(
+        url,
+        data: {"email": email, "otpcode": otpcode, "password": password},
+      );
+      if (response.statusCode == 201) {
+        return isChanged = true;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return isChanged;
+  }
 }
