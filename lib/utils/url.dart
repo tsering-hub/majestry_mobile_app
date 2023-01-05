@@ -4,6 +4,7 @@ const loginUrl = "users/login";
 const registerUrl = "users/register";
 const otpsendUrl = "otp-send";
 const resetpasswordUrl = "reset-password";
+const getFoodUrl = "fooditems/get";
 
 String? token;
 String? usertype;

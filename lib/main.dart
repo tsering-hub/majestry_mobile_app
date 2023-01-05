@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:majestry_mobile_app/screens/dashboard/dashboard_screen.dart';
+import 'package:majestry_mobile_app/screens/food/foods_screen.dart';
 import 'package:majestry_mobile_app/screens/forgetpassword/email_screen.dart';
 import 'package:majestry_mobile_app/screens/forgetpassword/otpenter_screen.dart';
 import 'package:majestry_mobile_app/screens/home/home_screen.dart';
@@ -10,7 +11,7 @@ import 'package:majestry_mobile_app/screens/splash_screen.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: "/dashboardScreen",
+    initialRoute: "/foodsScreen",
     routes: {
       "/": (context) => const SplashScreen(),
       "/loginScreen": (context) => const LoginScreen(),
@@ -19,6 +20,7 @@ void main() {
       "/dashboardScreen": (context) => const DashboardScreen(),
       "/forgetpasswordEmailScreen": (context) => const EmailScreen(),
       "/otpverificationScreen": (context) => const OtpenterScreen(),
+      "/foodsScreen": (context) => const FoodsScreen()
     },
   ));
 }
