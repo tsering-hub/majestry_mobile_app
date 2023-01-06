@@ -8,6 +8,7 @@ const getFoodUrl = "fooditems/get";
 const getCartUrl = "cart/get";
 const addtocartUrl = "cart/addtocart";
 const deleteallcartUrl = "cart/deleteall";
+const deleteacartUrl = "cart/delete/";
 
 String? token;
 String? usertype;

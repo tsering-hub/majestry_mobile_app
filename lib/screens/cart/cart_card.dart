@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:majestry_mobile_app/repository/cart_repository.dart';
+import 'package:majestry_mobile_app/utils/show_message.dart';
 import 'package:majestry_mobile_app/utils/url.dart';
 
 class CartCard extends StatefulWidget {
@@ -24,6 +26,16 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
+  _deleteCart(id) async {
+    bool isDeleted = await CartRepository().deleteacart(id);
+    if (isDeleted) {
+      Navigator.pushNamed(context, "/foodsScreen");
+      displaySuccessMessage(context, "Deleted Successfully");
+    } else {
+      displayErrorMessage(context, "Not Deleted");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,7 +96,9 @@ class _CartCardState extends State<CartCard> {
             Expanded(
               flex: 1,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  _deleteCart(widget.id);
+                },
                 icon: const Icon(
                   Icons.delete,
                   color: Colors.red,

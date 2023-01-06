@@ -10,6 +10,10 @@ class CartRepository {
     return await CartAPI().addtocart(foodId, quantity);
   }
 
+  Future<bool> deleteacart(id) async {
+    return await CartAPI().deletecart(id);
+  }
+
   Future<bool> deleteallcart() async {
     return await CartAPI().deleteallcart();
   }

@@ -52,6 +52,25 @@ class CartAPI {
     return isAdded;
   }
 
+  Future<bool> deletecart(id) async {
+    bool isDeleted = false;
+
+    try {
+      Response response;
+      var url = deleteacartUrl + id;
+      var dio = HttpServices().getDioInstace();
+      response = await dio.delete(url,
+          options: Options(
+              headers: {HttpHeaders.authorizationHeader: "Bearer $token"}));
+      if (response.statusCode == 200) {
+        return isDeleted = true;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return isDeleted;
+  }
+
   Future<bool> deleteallcart() async {
     bool isDeleted = false;
 
