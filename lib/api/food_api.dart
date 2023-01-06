@@ -20,7 +20,7 @@ class FoodAPI {
         foodResponse = null;
       }
     } catch (e) {
-      debugPrint('Failed to get Medicine $e');
+      debugPrint('Failed to get Food $e');
     }
     return foodResponse;
   }

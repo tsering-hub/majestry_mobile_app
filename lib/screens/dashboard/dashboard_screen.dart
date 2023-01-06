@@ -25,11 +25,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var cameraStatus = await Permission.camera.status;
     if (cameraStatus.isGranted) {
       String? qrdata = await scanner.scan();
+      Navigator.pushNamed(context, "/foodsScreen", arguments: qrdata);
       print(qrdata);
     } else {
       var isGrant = await Permission.camera.request();
       if (isGrant.isGranted) {
         String? qrdata = await scanner.scan();
+        Navigator.pushNamed(context, "/foodsScreen", arguments: qrdata);
         print(qrdata);
       }
     }

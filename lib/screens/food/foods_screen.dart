@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:majestry_mobile_app/model/cart_model.dart';
 import 'package:majestry_mobile_app/model/food_model.dart';
+import 'package:majestry_mobile_app/repository/cart_repository.dart';
 import 'package:majestry_mobile_app/repository/food_repository.dart';
+import 'package:majestry_mobile_app/response/cart_response.dart';
 import 'package:majestry_mobile_app/response/fooditems_response.dart';
-import 'package:majestry_mobile_app/utils/url.dart';
+import 'package:majestry_mobile_app/screens/food/food_card.dart';
 
 class FoodsScreen extends StatefulWidget {
   const FoodsScreen({Key? key}) : super(key: key);
@@ -17,41 +20,136 @@ class _FoodsScreenState extends State<FoodsScreen> {
   final _searchController = TextEditingController();
   List<FoodItems>? lstFoods;
   List<CartModel>? lstcart;
+  int? foodquantity;
+  bool messageSuccess = false;
 
   @override
   Widget build(BuildContext context) {
+    // String tablenumber = ModalRoute.of(context)!.settings.arguments as String;
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 245, 242, 242),
         appBar: AppBar(
+          backgroundColor: Colors.orange[700],
           title: const Text("Menu"),
+          actions: [
+            GestureDetector(
+              onTap: () => {
+                if (lstcart!.isNotEmpty)
+                  {
+                    Navigator.pushNamed(context, "/cartscreen",
+                        arguments: lstcart)
+                  }
+              },
+              child: Stack(
+                alignment: AlignmentDirectional.centerStart,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(right: 15.0),
+                    child: Icon(
+                      FontAwesomeIcons.cartShopping,
+                      size: 20,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: FutureBuilder<CartResponse?>(
+                      future: CartRepository().getCart(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.data != null) {
+                            lstcart = snapshot.data!.data!;
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "${lstcart!.length}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text("No data"),
+                            );
+                          }
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.blue),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         body: CustomScrollView(
           slivers: [
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(vertical: 10),
+            //     child: Text(
+            //       "Your are in table number $tablenumber",
+            //       textAlign: TextAlign.center,
+            //       style: const TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // search bar
             SliverToBoxAdapter(
                 child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: TextFormField(
-                onChanged: (value) => {
-                  setState(() {
-                    _searchQuery = _searchController.text;
-                  })
-                },
-                style: const TextStyle(fontSize: 20, letterSpacing: 2.0),
-                controller: _searchController,
-                decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: "Search",
-                  suffix: Padding(
-                    padding: EdgeInsets.only(right: 8.0),
-                    child: Icon(Icons.search),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextFormField(
+                  onChanged: (value) => {
+                    setState(() {
+                      _searchQuery = _searchController.text;
+                    })
+                  },
+                  style: const TextStyle(fontSize: 18, letterSpacing: 2.0),
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: "Search for food",
+                    suffix: Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),
             )),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            ),
 
             // const SliverToBoxAdapter(
             //   child: Padding(
@@ -59,12 +157,49 @@ class _FoodsScreenState extends State<FoodsScreen> {
             //     child: Text(
             //       "Category",
             //       style: TextStyle(
-            //           fontSize: 25, fontWeight: FontWeight.w500, color: textcolor),
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.w500,
+            //       ),
             //     ),
             //   ),
             // ),
 
             // category section
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 40,
+                width: double.infinity,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 222, 77, 77),
+                              Color.fromARGB(255, 149, 101, 34)
+                            ],
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Hello",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ),
+
             // SliverToBoxAdapter(
             //   child: SizedBox(
             //     height: 100,
@@ -163,59 +298,25 @@ class _FoodsScreenState extends State<FoodsScreen> {
                                   crossAxisCount: 2,
                                   mainAxisSpacing: 15,
                                   crossAxisSpacing: 15,
-                                  mainAxisExtent: 220),
+                                  mainAxisExtent: 290),
                           itemCount: lstFoods!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
-                              key: ValueKey("lstFoods$index"),
-                              onTap: () => {
-                                // Navigator.pushNamed(
-                                //   context,
-                                //   "/medicinescreen1",
-                                //   arguments: lstFoods![index],
-                                // )
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                elevation: 2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.network(
-                                          "$baseUrl${lstFoods![index].food_pic}",
-                                          width: double.infinity,
-                                          height: 120),
-                                      SizedBox(
-                                        width: double.infinity,
-                                        child: Text(
-                                          "${lstFoods![index].name}",
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: double.infinity,
-                                        child: Text(
-                                          "Rs ${lstFoods![index].price}",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.orange[700]),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
+                                key: ValueKey("lstFoods$index"),
+                                onTap: () => {
+                                      // Navigator.pushNamed(
+                                      //   context,
+                                      //   "/medicinescreen1",
+                                      //   arguments: lstFoods![index],
+                                      // )
+                                    },
+                                child: FoodCard(
+                                  id: lstFoods![index].id,
+                                  foodpic: lstFoods![index].food_pic,
+                                  name: lstFoods![index].name,
+                                  price: lstFoods![index].price,
+                                  preparingtime: lstFoods![index].preparingtime,
+                                ));
                           },
                         );
                       } else {

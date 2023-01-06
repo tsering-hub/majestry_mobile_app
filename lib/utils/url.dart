@@ -5,6 +5,9 @@ const registerUrl = "users/register";
 const otpsendUrl = "otp-send";
 const resetpasswordUrl = "reset-password";
 const getFoodUrl = "fooditems/get";
+const getCartUrl = "cart/get";
+const addtocartUrl = "cart/addtocart";
+const deleteallcartUrl = "cart/deleteall";
 
 String? token;
 String? usertype;

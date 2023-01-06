@@ -11,7 +11,7 @@ import 'package:majestry_mobile_app/screens/splash_screen.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: "/foodsScreen",
+    initialRoute: "/",
     routes: {
       "/": (context) => const SplashScreen(),
       "/loginScreen": (context) => const LoginScreen(),
