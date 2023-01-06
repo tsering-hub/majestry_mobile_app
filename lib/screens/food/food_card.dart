@@ -35,6 +35,7 @@ class _FoodCardState extends State<FoodCard> {
       setState(() {
         messageSuccess = true;
       });
+      Navigator.pushNamed(context, "/foodsScreen");
       displaySuccessMessage(context, "Added Successfully");
     } else {
       displayErrorMessage(context, "Not Added to cart");

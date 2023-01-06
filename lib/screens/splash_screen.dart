@@ -17,11 +17,10 @@ class _SplashScreenState extends State<SplashScreen> {
   _getDataFromSharedPref() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? value = prefs.getString("my_token");
-    final String? value3 = prefs.getString("usertype");
+
     if (value != null) {
       setState(() {
         token = value;
-        usertype = value3;
       });
     } else {
       setState(() {
@@ -41,14 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     Widget? nextscreen;
+
     if (token == "null") {
       nextscreen = const LoginScreen();
     } else {
-      if (usertype == "Customer") {
-        nextscreen = const FoodsScreen();
-      } else {
-        nextscreen = const LoginScreen();
-      }
+      nextscreen = const FoodsScreen();
     }
     return AnimatedSplashScreen(
       splash: Lottie.asset("assets/icons/40888-yellow-qr-code-menu.json"),

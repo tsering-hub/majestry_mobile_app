@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:majestry_mobile_app/screens/cart/cart_screen.dart';
 import 'package:majestry_mobile_app/screens/dashboard/dashboard_screen.dart';
 import 'package:majestry_mobile_app/screens/food/foods_screen.dart';
 import 'package:majestry_mobile_app/screens/forgetpassword/email_screen.dart';
@@ -20,7 +21,8 @@ void main() {
       "/dashboardScreen": (context) => const DashboardScreen(),
       "/forgetpasswordEmailScreen": (context) => const EmailScreen(),
       "/otpverificationScreen": (context) => const OtpenterScreen(),
-      "/foodsScreen": (context) => const FoodsScreen()
+      "/foodsScreen": (context) => const FoodsScreen(),
+      "/cartScreen": (context) => const CartScreen(),
     },
   ));
 }

@@ -38,7 +38,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
               onTap: () => {
                 if (lstcart!.isNotEmpty)
                   {
-                    Navigator.pushNamed(context, "/cartscreen",
+                    Navigator.pushNamed(context, "/cartScreen",
                         arguments: lstcart)
                   }
               },
@@ -46,7 +46,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
                 alignment: AlignmentDirectional.centerStart,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(right: 15.0),
+                    padding: EdgeInsets.only(right: 20.0),
                     child: Icon(
                       FontAwesomeIcons.cartShopping,
                       size: 20,
