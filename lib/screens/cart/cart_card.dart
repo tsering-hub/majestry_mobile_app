@@ -29,6 +29,7 @@ class _CartCardState extends State<CartCard> {
   _deleteCart(id) async {
     bool isDeleted = await CartRepository().deleteacart(id);
     if (isDeleted) {
+      Navigator.pop(context); // pop current page
       Navigator.pushNamed(context, "/cartScreen");
       displaySuccessMessage(context, "Deleted Successfully");
     } else {

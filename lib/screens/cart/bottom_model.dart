@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:majestry_mobile_app/repository/cart_repository.dart';
+import 'package:majestry_mobile_app/repository/order_repository.dart';
+import 'package:majestry_mobile_app/utils/show_message.dart';
 
 class BottomModel extends StatefulWidget {
   final orderItems;
@@ -22,12 +25,25 @@ class _BottomModelState extends State<BottomModel> {
   final _tableController = TextEditingController(text: "1");
 
   final List<String> _paymentoption = [
-    'Cash on Delivery',
+    'Pay Cash',
     'Esewa',
     'Khalti',
   ]; // Option 2
-
   String? _paymentmethod;
+
+  _postOrder(orderItems, totalprice, totalpreparingtime, tablenumber,
+      paymentmethod) async {
+    bool isAdded = await OrderRepository().postOrder(
+        orderItems, totalprice, totalpreparingtime, tablenumber, paymentmethod);
+    if (isAdded) {
+      bool isDeleted = await CartRepository().deleteallcart();
+      Navigator.pushNamed(context, "/foodsScreen");
+      displaySuccessMessage(context, "Ordered Successfully");
+    } else {
+      displayErrorMessage(context, "Not Ordered");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -102,14 +118,14 @@ class _BottomModelState extends State<BottomModel> {
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.green)),
                   onPressed: () {
-                    // setState(() {
-                    //   _postOrder(
-                    //       lstcart,
-                    //       totalprice,
-                    //       _paymentmethod,
-                    //       _phoneController.text,
-                    //       _addressController.text);
-                    // });
+                    setState(() {
+                      _postOrder(
+                          widget.orderItems,
+                          widget.totalprice,
+                          widget.totalpreparingtime,
+                          widget.tablenumber,
+                          _paymentmethod);
+                    });
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

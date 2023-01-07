@@ -49,18 +49,6 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  // _postOrder(
-  //     orderItems, totalprice, paymentmethod, phonenumber, address) async {
-  //   bool isAdded = await OrderRepository()
-  //       .postOrder(orderItems, totalprice, paymentmethod, phonenumber, address);
-  //   if (isAdded) {
-  //     Navigator.pushNamed(context, "/MyOrderScreen");
-  //     displaySuccessMessage(context, "Ordered Successfully");
-  //   } else {
-  //     displayErrorMessage(context, "Not Ordered");
-  //   }
-  // }
-
   @override
   void initState() {
     // _streamSubscription.add(proximityEvents!.listen((ProximityEvent event) {
@@ -80,6 +68,14 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 242, 242),
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, "/foodsScreen");
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+          //replace with our own icon data.
+        ),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.orange[700],
         title: const Text("My Cart"),
         actions: [
