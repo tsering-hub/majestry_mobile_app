@@ -29,7 +29,7 @@ class _CartCardState extends State<CartCard> {
   _deleteCart(id) async {
     bool isDeleted = await CartRepository().deleteacart(id);
     if (isDeleted) {
-      Navigator.pushNamed(context, "/foodsScreen");
+      Navigator.pushNamed(context, "/cartScreen");
       displaySuccessMessage(context, "Deleted Successfully");
     } else {
       displayErrorMessage(context, "Not Deleted");
