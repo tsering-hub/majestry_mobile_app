@@ -12,7 +12,7 @@ import 'package:majestry_mobile_app/screens/splash_screen.dart';
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: "/",
+    initialRoute: "/dashboardScreen",
     routes: {
       "/": (context) => const SplashScreen(),
       "/loginScreen": (context) => const LoginScreen(),

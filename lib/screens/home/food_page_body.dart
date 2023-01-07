@@ -25,7 +25,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   Widget _buildpageItem(int index) {
     return Stack(children: [
       Container(
-        height: 220,
+        height: 260,
         margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -42,16 +42,20 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: 130,
-          margin: const EdgeInsets.only(left: 30, right: 30, bottom: 30),
+          height: 80,
+          margin: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30), color: Colors.white),
           child: Container(
-            padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+            padding: const EdgeInsets.only(top: 5, left: 15, right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Burger"),
+                const Text(
+                  "Burger",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -68,21 +72,21 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       ),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     const Text(
                       "4.5",
                       style: TextStyle(fontSize: 12),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 40,
                     ),
                     const Text(
-                      "4122",
+                      "412",
                       style: TextStyle(fontSize: 12),
                     ),
                     const SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     const Text(
                       "comments",
@@ -90,12 +94,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: const [],
-                )
               ],
             ),
           ),
