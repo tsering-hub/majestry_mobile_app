@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:majestry_mobile_app/model/cart_model.dart';
 import 'package:majestry_mobile_app/repository/cart_repository.dart';
 import 'package:majestry_mobile_app/response/cart_response.dart';
+import 'package:majestry_mobile_app/screens/cart/bottom_model.dart';
 import 'package:majestry_mobile_app/screens/cart/cart_card.dart';
 import 'package:majestry_mobile_app/utils/show_message.dart';
 
@@ -19,14 +20,7 @@ class _CartScreenState extends State<CartScreen> {
   List<CartModel>? lstcart1;
   bool value = false;
   int? totalprice;
-
-  final List<String> _paymentoption = [
-    'Cash on Delivery',
-    'Esewa',
-    'Khalti',
-  ]; // Option 2
-
-  String? _paymentmethod; // Option 2
+  int? totalpreparingtime;
 
   _deleteAllCart() async {
     bool isDeleted = await CartRepository().deleteallcart();
@@ -40,15 +34,19 @@ class _CartScreenState extends State<CartScreen> {
 
   Future getCart() async {
     CartResponse? cart = await CartRepository().getCart();
-
     lstcart1 = cart?.data;
     setState(() {
       totalprice = lstcart1!
           .fold(
               0, (int sum, item) => sum + item.foodId!.price! * item.quantity!)
           .toInt();
+      totalpreparingtime = lstcart1!
+          .fold(
+              0,
+              (int sum, item) =>
+                  sum + item.foodId!.preparingtime! * item.quantity!)
+          .toInt();
     });
-    print(totalprice);
   }
 
   // _postOrder(
@@ -162,86 +160,18 @@ class _CartScreenState extends State<CartScreen> {
                       backgroundColor: MaterialStateProperty.all(Colors.green)),
                   onPressed: () {
                     showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                        ),
                         context: context,
                         builder: (BuildContext context) {
-                          return SizedBox(
-                            height: 300,
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    TextFormField(
-                                      enabled: false,
-                                      controller: _addressController,
-                                      decoration: const InputDecoration(
-                                        labelText: "Table Number",
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    DropdownButton(
-                                      hint: _paymentmethod == null
-                                          ? const Text('Select payment option')
-                                          : Text(
-                                              _paymentmethod!,
-                                              style: const TextStyle(
-                                                  color: Colors.blue),
-                                            ),
-                                      isExpanded: true,
-                                      iconSize: 30.0,
-                                      style:
-                                          const TextStyle(color: Colors.blue),
-                                      items: _paymentoption.map(
-                                        (val) {
-                                          return DropdownMenuItem<String>(
-                                            value: val,
-                                            child: Text(val),
-                                          );
-                                        },
-                                      ).toList(),
-                                      onChanged: (String? val) {
-                                        setState(() {
-                                          _paymentmethod = val;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: ElevatedButton(
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.green)),
-                                          onPressed: () {
-                                            // setState(() {
-                                            //   _postOrder(
-                                            //       lstcart,
-                                            //       totalprice,
-                                            //       _paymentmethod,
-                                            //       _phoneController.text,
-                                            //       _addressController.text);
-                                            // });
-                                          },
-                                          child: const Text("Order")),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Cancel")),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
+                          return BottomModel(
+                              orderItems: lstcart,
+                              totalpreparingtime: totalpreparingtime,
+                              totalprice: totalprice,
+                              tablenumber: "1");
                         });
                   },
                   child: Row(
