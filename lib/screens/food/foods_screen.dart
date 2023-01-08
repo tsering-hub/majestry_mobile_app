@@ -298,7 +298,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
                                   crossAxisCount: 2,
                                   mainAxisSpacing: 15,
                                   crossAxisSpacing: 15,
-                                  mainAxisExtent: 290),
+                                  mainAxisExtent: 300),
                           itemCount: lstFoods!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(

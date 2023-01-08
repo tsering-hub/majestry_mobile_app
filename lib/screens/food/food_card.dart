@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:majestry_mobile_app/repository/cart_repository.dart';
 import 'package:majestry_mobile_app/utils/show_message.dart';
 import 'package:majestry_mobile_app/utils/url.dart';
+import 'package:quantity_input/quantity_input.dart';
 
 class FoodCard extends StatefulWidget {
   final id;
@@ -26,7 +26,7 @@ class FoodCard extends StatefulWidget {
 }
 
 class _FoodCardState extends State<FoodCard> {
-  int? foodquantity;
+  int? foodquantity = 1;
   bool messageSuccess = false;
 
   _addtocart(foodId, int? quantity) async {
@@ -87,24 +87,30 @@ class _FoodCardState extends State<FoodCard> {
                     color: Colors.grey[500]),
               ),
             ),
-            Row(
-              children: [
-                const Text(
-                  "Quantity : ",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            Container(
+              padding: const EdgeInsets.only(top: 2),
+              width: double.infinity,
+              child: Text(
+                "Quantity:",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[500]),
+              ),
+            ),
+            QuantityInput(
+              buttonColor: Colors.orange[600],
+              inputWidth: 40,
+              maxValue: 20,
+              minValue: 1,
+              step: 1,
+              value: foodquantity,
+              onChanged: (value) => setState(
+                () => foodquantity = int.parse(
+                  value.replaceAll(',', ''),
                 ),
-                CustomNumberPicker(
-                  initialValue: 1,
-                  maxValue: 20,
-                  minValue: 1,
-                  step: 1,
-                  onValue: (value) {
-                    setState(() {
-                      foodquantity = int.tryParse(value.toString());
-                    });
-                  },
-                )
-              ],
+              ),
             ),
             Row(
               children: [

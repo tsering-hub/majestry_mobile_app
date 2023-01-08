@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:majestry_mobile_app/repository/cart_repository.dart';
 import 'package:majestry_mobile_app/repository/order_repository.dart';
 import 'package:majestry_mobile_app/utils/show_message.dart';
@@ -119,12 +120,16 @@ class _BottomModelState extends State<BottomModel> {
                       backgroundColor: MaterialStateProperty.all(Colors.green)),
                   onPressed: () {
                     setState(() {
-                      _postOrder(
-                          widget.orderItems,
-                          widget.totalprice,
-                          widget.totalpreparingtime,
-                          widget.tablenumber,
-                          _paymentmethod);
+                      if (_paymentmethod == "Khalti") {
+                        payWithKhaltiInApp();
+                      } else if (_paymentmethod == "Pay Cash") {
+                        _postOrder(
+                            widget.orderItems,
+                            widget.totalprice,
+                            widget.totalpreparingtime,
+                            widget.tablenumber,
+                            _paymentmethod);
+                      }
                     });
                   },
                   child: Row(
@@ -155,5 +160,47 @@ class _BottomModelState extends State<BottomModel> {
         ),
       ),
     );
+  }
+
+  payWithKhaltiInApp() {
+    KhaltiScope.of(context).pay(
+      config: PaymentConfig(
+          amount: widget.totalprice! * 100,
+          productIdentity: "1234",
+          productName: "Food Order"),
+      preferences: [
+        PaymentPreference.khalti,
+      ],
+      onSuccess: onSuccess,
+      onFailure: onFailure,
+      onCancel: onCancel,
+    );
+  }
+
+  void onSuccess(PaymentSuccessModel success) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Payment Successful"),
+            actions: [
+              SimpleDialogOption(
+                child: const Text("Ok"),
+                onPressed: () {
+                  _postOrder(widget.orderItems, widget.totalprice,
+                      widget.totalpreparingtime, widget.tablenumber, "Khalti");
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  void onFailure(PaymentFailureModel failure) {
+    displayErrorMessage(context, failure.toString());
+  }
+
+  void onCancel() {
+    displayErrorMessage(context, "Cancelled");
   }
 }
