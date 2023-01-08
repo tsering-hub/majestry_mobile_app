@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:majestry_mobile_app/screens/food/foods_screen.dart';
+import 'package:majestry_mobile_app/screens/dashboard/dashboard_screen.dart';
 import 'package:majestry_mobile_app/screens/login/login_screen.dart';
 import 'package:majestry_mobile_app/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token == "null") {
       nextscreen = const LoginScreen();
     } else {
-      nextscreen = const FoodsScreen();
+      nextscreen = const DashboardScreen();
     }
     return AnimatedSplashScreen(
       splash: Lottie.asset("assets/icons/40888-yellow-qr-code-menu.json"),

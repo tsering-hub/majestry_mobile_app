@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:majestry_mobile_app/screens/home/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:majestry_mobile_app/screens/order/pendingOrder_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -16,7 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> lstWidget = [
     const HomeScreen(),
-    const Scaffold(),
+    const PendingOrderScreen(),
     const Scaffold(),
     const Scaffold(),
   ];
