@@ -31,6 +31,14 @@ class _FoodsScreenState extends State<FoodsScreen> {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 245, 242, 242),
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/dashboardScreen");
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+            //replace with our own icon data.
+          ),
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.orange[700],
           title: const Text("Menu"),
           actions: [

@@ -10,7 +10,7 @@ const addtocartUrl = "cart/addtocart";
 const deleteallcartUrl = "cart/deleteall";
 const deleteacartUrl = "cart/delete/";
 const postOrderUrl = "order/add";
-const getMyPendingOrderUrl = "order/getmypendingorders";
+const getMyOrderUrl = "order/getmyorders";
 
 String? token;
 String? usertype;

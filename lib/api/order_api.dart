@@ -7,13 +7,13 @@ import 'package:majestry_mobile_app/response/order_response.dart';
 import 'package:majestry_mobile_app/utils/url.dart';
 
 class OrderAPI {
-  Future<OrderResponse?> getMyPendingOrder() async {
+  Future<OrderResponse?> getMyOrder() async {
     Future.delayed(const Duration(seconds: 0), () {});
     OrderResponse? orderResponse;
 
     try {
       Response response;
-      var url = getMyPendingOrderUrl;
+      var url = getMyOrderUrl;
       var dio = HttpServices().getDioInstace();
       response = await dio.get(url,
           options: Options(
