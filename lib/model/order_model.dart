@@ -15,6 +15,7 @@ class OrderModel {
   String? paymentmethod;
   String? paymentstatus;
   String? tablenumber;
+  DateTime? createdAt;
 
   OrderModel({
     this.id,
@@ -25,6 +26,7 @@ class OrderModel {
     this.paymentmethod,
     this.paymentstatus,
     this.tablenumber,
+    this.createdAt,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>

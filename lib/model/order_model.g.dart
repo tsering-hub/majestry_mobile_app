@@ -18,6 +18,9 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
     paymentmethod: json['paymentmethod'] as String?,
     paymentstatus: json['paymentstatus'] as String?,
     tablenumber: json['tablenumber'] as String?,
+    createdAt: json['createdAt'] == null
+        ? null
+        : DateTime.parse(json['createdAt'] as String),
   );
 }
 
@@ -31,4 +34,5 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'paymentmethod': instance.paymentmethod,
       'paymentstatus': instance.paymentstatus,
       'tablenumber': instance.tablenumber,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };
