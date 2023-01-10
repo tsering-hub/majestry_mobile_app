@@ -46,13 +46,15 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       nextscreen = const DashboardScreen();
     }
-    return AnimatedSplashScreen(
-      splash: Lottie.asset("assets/icons/40888-yellow-qr-code-menu.json"),
-      nextScreen: nextscreen,
-      duration: 3000,
-      splashTransition: SplashTransition.fadeTransition,
-      splashIconSize: 250,
-      backgroundColor: const Color.fromARGB(255, 245, 242, 242),
+    return SafeArea(
+      child: AnimatedSplashScreen(
+        splash: Lottie.asset("assets/icons/40888-yellow-qr-code-menu.json"),
+        nextScreen: nextscreen,
+        duration: 3000,
+        splashTransition: SplashTransition.fadeTransition,
+        splashIconSize: 250,
+        backgroundColor: const Color.fromARGB(255, 245, 242, 242),
+      ),
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:majestry_mobile_app/screens/forgetpassword/email_screen.dart';
 import 'package:majestry_mobile_app/screens/forgetpassword/otpenter_screen.dart';
 import 'package:majestry_mobile_app/screens/home/home_screen.dart';
 import 'package:majestry_mobile_app/screens/login/login_screen.dart';
+import 'package:majestry_mobile_app/screens/order/AllOrders_screen.dart';
+import 'package:majestry_mobile_app/screens/profile/profile_screeen.dart';
 import 'package:majestry_mobile_app/screens/register/register_screen.dart';
 import 'package:majestry_mobile_app/screens/splash_screen.dart';
 
@@ -30,6 +32,8 @@ void main() {
           "/otpverificationScreen": (context) => const OtpenterScreen(),
           "/foodsScreen": (context) => const FoodsScreen(),
           "/cartScreen": (context) => const CartScreen(),
+          "/allordersScreen": (context) => const AllOrderScreen(),
+          "/profileScreen": (context) => const ProfileUpdateScreen()
         },
       );
     },

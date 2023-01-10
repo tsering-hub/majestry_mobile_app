@@ -11,6 +11,10 @@ const deleteallcartUrl = "cart/deleteall";
 const deleteacartUrl = "cart/delete/";
 const postOrderUrl = "order/add";
 const getMyOrderUrl = "order/getmyorders";
+const getMeUrl = "users/myselfcustomer";
+const updateProfileUrl = "users/profileupdate";
+const updateProfilePicUrl = "users/profilepicupdate";
+const changepasswordUrl = "users/changepassword";
 
 String? token;
 String? usertype;
