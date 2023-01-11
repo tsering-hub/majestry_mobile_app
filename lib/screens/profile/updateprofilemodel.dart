@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:majestry_mobile_app/model/user_model.dart';
+import 'package:majestry_mobile_app/repository/user_repository.dart';
+import 'package:majestry_mobile_app/utils/show_message.dart';
 
 class UpdateprofileModel extends StatefulWidget {
-  const UpdateprofileModel({Key? key}) : super(key: key);
+  final String? name;
+
+  const UpdateprofileModel({Key? key, this.name}) : super(key: key);
 
   @override
   State<UpdateprofileModel> createState() => _UpdateprofileModelState();
 }
 
 class _UpdateprofileModelState extends State<UpdateprofileModel> {
-  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _dobController = TextEditingController();
   final _contactnoController = TextEditingController();
-  final _genderController = TextEditingController();
 
   String selectedDate = "Select Date";
   DateTime _date = DateTime(2010, 1);
@@ -44,13 +46,30 @@ class _UpdateprofileModelState extends State<UpdateprofileModel> {
     }
   }
 
+  _updatePatientProfile(UserModel user) async {
+    bool isUpdated = await UserRepository().updateProfile(user);
+    _displayMessage(isUpdated);
+  }
+
+  _displayMessage(bool isUpdated) {
+    if (isUpdated) {
+      Navigator.pushNamed(context, "/dashboardScreen");
+      displaySuccessMessage(context, "Updated Success");
+    } else {
+      displayErrorMessage(context, "Update Failed");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _nameController.text = widget.name!;
+    });
     return SizedBox(
       height: 550,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: MediaQuery.of(context).viewInsets,
           child: Column(
             children: [
               TextFormField(
@@ -142,21 +161,12 @@ class _UpdateprofileModelState extends State<UpdateprofileModel> {
                             MaterialStateProperty.all(Colors.green[700])),
                     onPressed: () {
                       setState(() {
-                        // if (_formKey.currentState!
-                        //     .validate()) {
-                        //   UserModel patient =
-                        //       UserModel(
-                        //     firstname:
-                        //         _firstController.text,
-                        //     lastname:
-                        //         _lastController.text,
-                        //     email: _emailController.text,
-                        //     address:
-                        //         _addressController.text,
-                        //     phone: _phoneController.text,
-                        //   );
-                        //   _updatePatientProfile(patient);
-                        // }
+                        UserModel user = UserModel(
+                            name: _nameController.text,
+                            contactno: _contactnoController.text,
+                            gender: dropdownvalue,
+                            dob: selectedDate);
+                        _updatePatientProfile(user);
                       });
                     },
                     child: const Text("Update")),

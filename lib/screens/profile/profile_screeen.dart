@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:majestry_mobile_app/model/user_model.dart';
@@ -20,37 +19,10 @@ class ProfileUpdateScreen extends StatefulWidget {
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _dobController = TextEditingController();
   final _contactnoController = TextEditingController();
-  final _genderController = TextEditingController();
   final _newpasswordController = TextEditingController();
   final _confirmnewpasswordController = TextEditingController();
   final _oldpasswordController = TextEditingController();
-
-  String selectedDate = "Select Date";
-
-  DateTime _date = DateTime.now();
-
-  datePicker() async {
-    final DateTime? newDate = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2024, 1),
-      helpText: 'Select a date',
-    );
-    if (newDate != null) {
-      setState(() {
-        _date = newDate;
-        selectedDate = DateFormat('yyyy-MM-dd').format(_date).toString();
-      });
-    }
-  }
-
-  _updatePatientProfile(UserModel user) async {
-    bool isUpdated = await UserRepository().updateProfile(user);
-    _displayMessage(isUpdated);
-  }
 
   _updateUserPassword(String oldpassword, String newpassword) async {
     bool isUpdated =
@@ -65,7 +37,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   _displayMessage(bool isUpdated) {
     if (isUpdated) {
-      Navigator.pushNamed(context, "/patientnavbar");
+      Navigator.pushNamed(context, "/dashboardScreen");
       displaySuccessMessage(context, "Updated Success");
     } else {
       displayErrorMessage(context, "Update Failed");
@@ -290,6 +262,22 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Date of birth : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.dob}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -313,7 +301,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
-                          return const UpdateprofileModel();
+                          return UpdateprofileModel(
+                            name: usermodel.name!,
+                          );
                         });
                   },
                   style: ButtonStyle(
@@ -354,111 +344,117 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
+                            padding: MediaQuery.of(context).viewInsets,
                             child: Form(
                               key: _formKey,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter old password';
-                                      }
-                                      return null;
-                                    },
-                                    key: const ValueKey("txtoldpassword"),
-                                    controller: _oldpasswordController,
-                                    decoration: const InputDecoration(
-                                      labelText: "Old Password",
-                                      hintText: "Old Password",
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter old password';
+                                        }
+                                        return null;
+                                      },
+                                      key: const ValueKey("txtoldpassword"),
+                                      controller: _oldpasswordController,
+                                      decoration: const InputDecoration(
+                                        labelText: "Old Password",
+                                        hintText: "Old Password",
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter new password';
-                                      }
-                                      return null;
-                                    },
-                                    key: const ValueKey("txtnewpassword"),
-                                    controller: _newpasswordController,
-                                    decoration: const InputDecoration(
-                                      labelText: "New Password",
-                                      hintText: "New Password",
+                                    const SizedBox(
+                                      height: 10,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter confirm new password';
-                                      }
-                                      return null;
-                                    },
-                                    key:
-                                        const ValueKey("txtconfirmnewpassword"),
-                                    controller: _confirmnewpasswordController,
-                                    decoration: const InputDecoration(
-                                      labelText: "Confirm New Password",
-                                      hintText: "confirm New Password",
+                                    TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter new password';
+                                        }
+                                        return null;
+                                      },
+                                      key: const ValueKey("txtnewpassword"),
+                                      controller: _newpasswordController,
+                                      decoration: const InputDecoration(
+                                        labelText: "New Password",
+                                        hintText: "New Password",
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    width: 250,
-                                    child: ElevatedButton(
-                                        key:
-                                            const ValueKey("btnChangePassword"),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              if (_oldpasswordController.text ==
-                                                  _newpasswordController.text) {
-                                                displayErrorMessage(context,
-                                                    "Old password and New password is same");
-                                                return;
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    TextFormField(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please enter confirm new password';
+                                        }
+                                        return null;
+                                      },
+                                      key: const ValueKey(
+                                          "txtconfirmnewpassword"),
+                                      controller: _confirmnewpasswordController,
+                                      decoration: const InputDecoration(
+                                        labelText: "Confirm New Password",
+                                        hintText: "confirm New Password",
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 250,
+                                      child: ElevatedButton(
+                                          key: const ValueKey(
+                                              "btnChangePassword"),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                if (_oldpasswordController
+                                                        .text ==
+                                                    _newpasswordController
+                                                        .text) {
+                                                  displayErrorMessage(context,
+                                                      "Old password and New password is same");
+                                                  return;
+                                                }
+                                                if (_confirmnewpasswordController
+                                                        .text !=
+                                                    _newpasswordController
+                                                        .text) {
+                                                  displayErrorMessage(context,
+                                                      "New password and Confirm New password is not same");
+                                                  return;
+                                                }
+                                                _updateUserPassword(
+                                                    _oldpasswordController.text,
+                                                    _newpasswordController
+                                                        .text);
                                               }
-                                              if (_confirmnewpasswordController
-                                                      .text !=
-                                                  _newpasswordController.text) {
-                                                displayErrorMessage(context,
-                                                    "New password and Confirm New password is not same");
-                                                return;
-                                              }
-                                              _updateUserPassword(
-                                                  _oldpasswordController.text,
-                                                  _newpasswordController.text);
-                                            }
-                                          });
-                                        },
-                                        child: const Text("Change")),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    width: 250,
-                                    child: ElevatedButton(
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.red[700])),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Cancel")),
-                                  )
-                                ],
+                                            });
+                                          },
+                                          child: const Text("Change")),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 250,
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.red[700])),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Cancel")),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );
