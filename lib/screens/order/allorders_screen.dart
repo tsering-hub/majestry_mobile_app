@@ -20,6 +20,8 @@ class _AllOrderScreenState extends State<AllOrderScreen> {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 245, 242, 242),
         appBar: AppBar(
+          elevation: 0,
+          foregroundColor: Colors.orange[900],
           backgroundColor: Colors.transparent,
           title: const Text(
             "All Orders",

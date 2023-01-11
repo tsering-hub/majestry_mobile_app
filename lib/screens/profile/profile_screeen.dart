@@ -152,9 +152,11 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.orange[900],
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: const Text("My Profile"),
         centerTitle: true,
-        backgroundColor: Colors.amberAccent,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -162,25 +164,25 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: GestureDetector(
                   onTap: () => showBottomModel(),
                   child: Stack(
                     children: [
                       SizedBox(
-                        width: 200,
-                        height: 200,
+                        width: 150,
+                        height: 150,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: img == null
                               ? usermodel.profilepic != null
                                   ? Image.network(
                                       "$baseUrl${usermodel.profilepic}",
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.cover,
                                     )
                                   : Image.network(
                                       "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.cover,
                                     )
                               : Image.file(
                                   img!,
@@ -189,13 +191,13 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                         ),
                       ),
                       Positioned(
-                        right: 10,
-                        bottom: 10,
+                        right: 5,
+                        bottom: 5,
                         child: Container(
-                            height: 30,
-                            width: 30,
+                            height: 35,
+                            width: 35,
                             decoration: BoxDecoration(
-                                color: Colors.blueGrey,
+                                color: Colors.orange[700],
                                 borderRadius: BorderRadius.circular(50)),
                             child: const Icon(
                               Icons.add_a_photo,
@@ -207,74 +209,89 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   ),
                 ),
               ),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Username : ",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "${usermodel.username}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Name : ",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "${usermodel.name}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Email : ",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "${usermodel.email}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Phone Number : ",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "${usermodel.contactno}",
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, left: 45),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          "Username : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.username}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Name : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.name}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Email : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.email}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Phone Number : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.contactno}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Gender : ",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${usermodel.gender}",
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -307,9 +324,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                       ),
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.green)),
-                  child: const Text(
-                    "Update Profile",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.edit),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "Update Profile",
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -386,40 +413,51 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  ElevatedButton(
-                                      key: const ValueKey("btnChangePassword"),
-                                      onPressed: () {
-                                        setState(() {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            if (_oldpasswordController.text ==
-                                                _newpasswordController.text) {
-                                              displayErrorMessage(context,
-                                                  "Old password and New password is same");
-                                              return;
+                                  SizedBox(
+                                    width: 250,
+                                    child: ElevatedButton(
+                                        key:
+                                            const ValueKey("btnChangePassword"),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              if (_oldpasswordController.text ==
+                                                  _newpasswordController.text) {
+                                                displayErrorMessage(context,
+                                                    "Old password and New password is same");
+                                                return;
+                                              }
+                                              if (_confirmnewpasswordController
+                                                      .text !=
+                                                  _newpasswordController.text) {
+                                                displayErrorMessage(context,
+                                                    "New password and Confirm New password is not same");
+                                                return;
+                                              }
+                                              _updateUserPassword(
+                                                  _oldpasswordController.text,
+                                                  _newpasswordController.text);
                                             }
-                                            if (_confirmnewpasswordController
-                                                    .text !=
-                                                _newpasswordController.text) {
-                                              displayErrorMessage(context,
-                                                  "New password and Confirm New password is not same");
-                                              return;
-                                            }
-                                            _updateUserPassword(
-                                                _oldpasswordController.text,
-                                                _newpasswordController.text);
-                                          }
-                                        });
-                                      },
-                                      child: const Text("Change")),
+                                          });
+                                        },
+                                        child: const Text("Change")),
+                                  ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text("Cancel"))
+                                  SizedBox(
+                                    width: 250,
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.red[700])),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Cancel")),
+                                  )
                                 ],
                               ),
                             ),
@@ -429,9 +467,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)))),
-                  child: const Text(
-                    "Change Password",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.change_circle),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "Change Password",
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
               ),
