@@ -6,6 +6,7 @@ import 'package:majestry_mobile_app/response/cart_response.dart';
 import 'package:majestry_mobile_app/screens/cart/bottom_model.dart';
 import 'package:majestry_mobile_app/screens/cart/cart_card.dart';
 import 'package:majestry_mobile_app/utils/show_message.dart';
+import 'package:majestry_mobile_app/utils/url.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -167,7 +168,7 @@ class _CartScreenState extends State<CartScreen> {
                               orderItems: lstcart,
                               totalpreparingtime: totalpreparingtime,
                               totalprice: totalprice,
-                              tablenumber: "1");
+                              tablenumber: tablenumber);
                         });
                   },
                   child: Row(

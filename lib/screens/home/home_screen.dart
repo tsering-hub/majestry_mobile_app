@@ -15,6 +15,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<FoodItems>? lstFoods;
+
+  List<String> litems = [
+    "Starters",
+    "Main Course",
+    "Mo:mo",
+    "Burger",
+    "Thakali",
+    "Pizza",
+    "Salad",
+    "Keema Noodle",
+    "Fired Rice",
+    "Neweri Khaja Set",
+    "Thukpa",
+    "Chowmein",
+    "Cold Beverage",
+    "Hot Beverage",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: litems.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -97,11 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            "Hello",
+                            litems[index],
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white),

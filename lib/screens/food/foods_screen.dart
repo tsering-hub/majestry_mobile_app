@@ -22,10 +22,24 @@ class _FoodsScreenState extends State<FoodsScreen> {
   List<CartModel>? lstcart;
   int? foodquantity;
   bool messageSuccess = false;
-
+  List<String> litems = [
+    "Starters",
+    "Main Course",
+    "Mo:mo",
+    "Burger",
+    "Thakali",
+    "Pizza",
+    "Salad",
+    "Keema Noodle",
+    "Fired Rice",
+    "Neweri Khaja Set",
+    "Thukpa",
+    "Chowmein",
+    "Cold Beverage",
+    "Hot Beverage",
+  ];
   @override
   Widget build(BuildContext context) {
-    // String tablenumber = ModalRoute.of(context)!.settings.arguments as String;
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -179,7 +193,7 @@ class _FoodsScreenState extends State<FoodsScreen> {
                 width: double.infinity,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: litems.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -193,11 +207,11 @@ class _FoodsScreenState extends State<FoodsScreen> {
                             ],
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            "Hello",
+                            litems[index],
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white),

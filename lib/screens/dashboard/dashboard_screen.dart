@@ -4,6 +4,7 @@ import 'package:majestry_mobile_app/screens/home/home_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:majestry_mobile_app/screens/order/Order_screen.dart';
 import 'package:majestry_mobile_app/screens/settings/settings_screen.dart';
+import 'package:majestry_mobile_app/utils/url.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -27,14 +28,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var cameraStatus = await Permission.camera.status;
     if (cameraStatus.isGranted) {
       String? qrdata = await scanner.scan();
-      Navigator.pushNamed(context, "/foodsScreen", arguments: qrdata);
-      print(qrdata);
+      setState(() {
+        tablenumber = qrdata;
+      });
+      Navigator.pushNamed(context, "/foodsScreen");
     } else {
       var isGrant = await Permission.camera.request();
       if (isGrant.isGranted) {
         String? qrdata = await scanner.scan();
-        Navigator.pushNamed(context, "/foodsScreen", arguments: qrdata);
-        print(qrdata);
+        setState(() {
+          tablenumber = qrdata;
+        });
+        Navigator.pushNamed(context, "/foodsScreen");
       }
     }
   }
