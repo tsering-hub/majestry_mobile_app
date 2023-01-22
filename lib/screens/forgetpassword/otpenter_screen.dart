@@ -205,7 +205,7 @@ class _OtpenterScreenState extends State<OtpenterScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
-                              Text("Change Passwprd",
+                              Text("Change Password",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500)),

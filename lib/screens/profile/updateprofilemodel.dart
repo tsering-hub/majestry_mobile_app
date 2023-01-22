@@ -70,122 +70,125 @@ class _UpdateprofileModelState extends State<UpdateprofileModel> {
       child: SingleChildScrollView(
         child: Padding(
           padding: MediaQuery.of(context).viewInsets,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: "Name",
-                  hintText: "Name",
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: _contactnoController,
-                decoration: const InputDecoration(
-                  labelText: "Phone Number",
-                  hintText: "Phone Number",
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  const Text("Gender : "),
-                  const SizedBox(
-                    width: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: "Name",
+                    hintText: "Name",
                   ),
-                  SizedBox(
-                    width: 250,
-                    child: DropdownButton(
-                      // Initial Value
-                      value: dropdownvalue,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _contactnoController,
+                  decoration: const InputDecoration(
+                    labelText: "Phone Number",
+                    hintText: "Phone Number",
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    const Text("Gender : "),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: DropdownButton(
+                        // Initial Value
+                        value: dropdownvalue,
 
-                      // Down Arrow Icon
-                      icon: const Icon(Icons.keyboard_arrow_down),
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
 
-                      // Array list of items
-                      items: items.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      // After selecting the desired option,it will
-                      // change button value to selected value
-                      onChanged: (String? newValue) {
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text("Date of Birth : "),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                        ),
+                        onPressed: () {
+                          datePicker();
+                        },
+                        child: Text(
+                          selectedDate,
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 250,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green[700])),
+                      onPressed: () {
                         setState(() {
-                          dropdownvalue = newValue!;
+                          UserModel user = UserModel(
+                              name: _nameController.text,
+                              contactno: _contactnoController.text,
+                              gender: dropdownvalue,
+                              dob: selectedDate);
+                          _updatePatientProfile(user);
                         });
                       },
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("Date of Birth : "),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox(
-                    width: 250,
-                    child: ElevatedButton(
+                      child: const Text("Update")),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 250,
+                  child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red[700])),
                       onPressed: () {
-                        datePicker();
+                        Navigator.pop(context);
                       },
-                      child: Text(
-                        selectedDate,
-                        style:
-                            const TextStyle(fontSize: 16, color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.green[700])),
-                    onPressed: () {
-                      setState(() {
-                        UserModel user = UserModel(
-                            name: _nameController.text,
-                            contactno: _contactnoController.text,
-                            gender: dropdownvalue,
-                            dob: selectedDate);
-                        _updatePatientProfile(user);
-                      });
-                    },
-                    child: const Text("Update")),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.red[700])),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Cancel")),
-              )
-            ],
+                      child: const Text("Cancel")),
+                )
+              ],
+            ),
           ),
         ),
       ),

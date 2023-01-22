@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     bool isLogin = await UserRepository()
         .loginUser(_emailController.text, _passwordController.text);
     if (isLogin && usertype == "Customer") {
-      Navigator.pushNamed(context, "/foodsScreen");
+      Navigator.pushNamed(context, "/dashboardScreen");
       // ignore: use_build_context_synchronously
       displaySuccessMessage(context, "Login Success");
     } else {
